@@ -2,8 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default class App extends React.Component {
-  render() {
+export default function Home() {
     return (
       <View style={styles.container}>
         <View style={styles.menuContainer}>
@@ -26,7 +25,6 @@ export default class App extends React.Component {
         <StatusBar style="auto" />
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({

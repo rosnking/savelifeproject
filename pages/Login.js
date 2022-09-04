@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import CheckBox from 'expo-checkbox';
 
-export default function Login() {
+export default function Login(props) {
 
   const [boxIsChecked, setBoxIsChecked] = useState(false);
   const [password, setPassword] = useState("");
@@ -29,7 +29,7 @@ export default function Login() {
                 />
                 <Text style={styles.textCheckbox}>Manter minha sessão</Text>
             </View>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate("Home")}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
         </View>

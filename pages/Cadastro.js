@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Cadastro (props) {
 
@@ -23,6 +24,44 @@ export default function Cadastro (props) {
       console.log(email)
       console.log(password)
       console.log(confirmPassword)
+      props.navigation.navigate('Login')
+    }
+
+    async function saveData(){
+      const novoId = await geraId()
+      const usuario = {
+        id: novoId.toString(),
+        name: name,
+        email: email,
+        cpf: cpf,
+        cellphoneNumber: cellphoneNumber
+      }
+      try{
+        const jsonValue = JSON.stringify(usuario)
+        await AsyncStorage.setItem(usuario.id, jsonValue)
+        getData()
+      }catch (e){
+        console.log(e)
+      }
+    }
+
+    async function getData(){
+      try{
+        const value = await AsyncStorage.getItem("1")
+        if(value !== null){
+          console.log(value)
+        }
+      } catch (e){
+        console.log(e)
+      }
+    }
+
+    async function geraId(){
+      const todasChaves = await AsyncStorage.getAllKeys()
+      if(todasChaves <= 0){
+        return 1
+      }
+      return todasChaves.length + 1
     }
 
     return (
@@ -57,7 +96,7 @@ export default function Cadastro (props) {
                   </TouchableOpacity>
                   
               </View>
-              <TouchableOpacity style={[styles.button, {backgroundColor: boxIsChecked ? '#6914FF' : '#A9A9A9'}]} disabled={!boxIsChecked} onPress={print}>
+              <TouchableOpacity style={[styles.button, {backgroundColor: boxIsChecked ? '#6914FF' : '#A9A9A9'}]} disabled={!boxIsChecked} onPress={saveData}>
                   <Text style={styles.buttonText}>Cadastrar</Text>
               </TouchableOpacity>
           </View>

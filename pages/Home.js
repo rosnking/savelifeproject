@@ -14,14 +14,6 @@ export default function Home() {
             <Text style={styles.subtitle}>Hospitais perto de você:</Text>
             {/* Mapa */}
         </View>
-
-        <View style={styles.menuInferiorContainer}>
-            <View style={styles.menuInferior}>
-                <TouchableOpacity style={styles.menuInferiorButton}>
-                    <Text style={styles.menuInferiorButtonText}>+</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
         <StatusBar style="auto" />
       </View>
     );

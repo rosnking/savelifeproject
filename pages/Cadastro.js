@@ -24,7 +24,7 @@ export default function Cadastro (props) {
       console.log(email)
       console.log(password)
       console.log(confirmPassword)
-      props.navigation.navigate('Login')
+      
     }
 
     async function saveData(){
@@ -47,7 +47,7 @@ export default function Cadastro (props) {
 
     async function getData(){
       try{
-        const value = await AsyncStorage.getItem("1")
+        const value = await AsyncStorage.getItem('1')
         if(value !== null){
           console.log(value)
         }
@@ -96,7 +96,7 @@ export default function Cadastro (props) {
                   </TouchableOpacity>
                   
               </View>
-              <TouchableOpacity style={[styles.button, {backgroundColor: boxIsChecked ? '#6914FF' : '#A9A9A9'}]} disabled={!boxIsChecked} onPress={saveData}>
+              <TouchableOpacity style={[styles.button, {backgroundColor: boxIsChecked ? '#6914FF' : '#A9A9A9'}]} disabled={!boxIsChecked} onPress={getData}>
                   <Text style={styles.buttonText}>Cadastrar</Text>
               </TouchableOpacity>
           </View>

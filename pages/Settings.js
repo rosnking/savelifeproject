@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PhoneItem from '../components/PhoneItem';
+import uuid from 'react-native-uuid';
 
 export default function Settings() {
 
@@ -17,25 +18,27 @@ export default function Settings() {
   }, [])
 
   async function saveData(){
-    const novoId = await geraId()
+    var bool = false;
+    var newId = uuid.v4();
+    console.log(newId)
     const telefone = {
-      id: novoId.toString(),
+      id: newId.toString(),
       ddd: ddd,
       number: phoneNumber
     }
     try{
       const jsonValue = JSON.stringify(telefone)
-      itemNumbers.forEach(async (item) => {
+      itemNumbers.forEach((item) =>{
         if(item.number === telefone.number){
-          var index = itemNumbers.indexOf(item)
-          console.log(index)
-          var removedItem = itemNumbers.splice(index, 1)
-          console.log(removedItem)
-          await AsyncStorage.removeItem(removedItem[0].id)
-          await AsyncStorage.setItem(telefone.id, jsonValue)
+          bool = true;
         }
       })
-      await AsyncStorage.setItem(telefone.id, jsonValue)
+
+      if(bool === false){
+        await AsyncStorage.setItem(telefone.id, jsonValue)
+      }
+      
+      
       setNumberList()
     }catch (e){
       console.log(e)
@@ -74,9 +77,13 @@ export default function Settings() {
   }
 
   async function editPhone(item){
-    setDdd(item.ddd)
-    setPhoneNumber(item.number)
-
+    const telefone = {
+      ddd: ddd,
+      number: phoneNumber
+    }
+    const jsonValue = JSON.stringify(telefone)
+    await AsyncStorage.mergeItem(item.id, jsonValue)
+    setNumberList()
   }
 
   async function removePhone(item){
